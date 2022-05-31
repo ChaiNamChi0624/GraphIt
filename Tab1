@@ -1,0 +1,68 @@
+#
+# This is the user-interface definition of a Shiny web application. You can
+# run the application by clicking 'Run App' above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+
+library(shiny)
+
+# Define UI for application that draws a histogram
+shinyUI(fluidPage(
+
+    # Application title
+    titlePanel("Breast Cancer Prediction"),
+    
+    navlistPanel(
+      "Menu",
+      tabPanel("Documentation",
+               h3('Introduction'),
+               'Aiyai mates! Welcome to GraphIt R Shiny application. In this application, users can interact with the interface to check some of the 
+                               relationships of the graphs based on the breast cancer dataset. This application can also make predictions for users based on the user input. 
+                               This application can also show the accuracy and consistency of the prediction result based on the actual breast cancer dataset.',
+               h3('User Input'),
+               'There are 2 tabs that need the user to input the data through the side panel by clicking the checkboxes given which are the Exploratory Data Analysis 
+                               tab and the Prediction tab. After the user clicks the checkboxes, the user needs to click the "submit" button so that the application can receive the 
+                               input based on the user.',
+               h3('Summary'),
+               'The summary of the breast cancer dataset...SOMETHING.....There are also descriptions of each feature, which means the meaning of each column in the dataset.',
+      
+               h3('Exploratory Data Analysis'),
+               'In this tab, it requires user input so that users can view some visualized plots. There are some models to show the visualized plot. ', 
+               h5('The 1st plot is Cross Correlation which portray...'),
+               h5('The 2nd plot is Dimensionality Reduction which shows...'),
+               h5('The 3rd plot is a box-plot that can make the user see....'),
+      
+               h3('Prediction'),
+               'In this tab, it also requires user input so that users can get the predicted result of breast cancer based on our trained model and prepared dataset.',
+      
+               h3('Model Evaluation'),
+               h5('This tab is about the evaluation of our model for the prediction. There are some models to show the evaluation.'),
+               h5('First is the confusion matrix, which is used to measure the accuracy of the logistic regression model.'),
+               h5('Second is precision and recall....'),
+               h5('Third is Receiver Operating Characteristic(ROC) curve...')
+               ),
+  
+      tabPanel("Tab2"),
+      tabPanel("Tab3")
+    ),
+    
+
+    # Sidebar with a slider input for number of bins
+    sidebarLayout(
+        sidebarPanel(
+          textInput("name","Something that is standardized for tab without input"),
+        ),
+        
+
+        # Show a plot of the generated distribution
+        mainPanel(
+          
+          #output from main pane =l will display under the output from above section
+
+    )
+)
+)
+)
