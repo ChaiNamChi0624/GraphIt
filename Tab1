@@ -1,11 +1,5 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+
+#-ui-
 
 library(shiny)
 
@@ -24,12 +18,15 @@ shinyUI(fluidPage(
                                This application can also show the accuracy and consistency of the prediction result based on the actual breast cancer dataset.',
                h3('User Input'),
                'There are 2 tabs that need the user to input the data through the side panel by clicking the checkboxes given which are the Exploratory Data Analysis 
-                               tab and the Prediction tab. After the user clicks the checkboxes, the user needs to click the "submit" button so that the application can receive the 
-                               input based on the user.',
-               h3('Summary'),
-               'The summary of the breast cancer dataset...SOMETHING.....There are also descriptions of each feature, which means the meaning of each column in the dataset.',
+                               tab and the Prediction tab.',
+               h5('In the Exploratory Data Analysis tab, users need to choose the attributes to see the correlation'),
+               h5('##### SOMETHING FOR PREDICTION TAB####'),
+               
+               h3('Attribute Description and Data Summary'),
+               'The descriptions of each feature is provided here. Next, the breast cancer dataset is summarized by providing the Mininum, 1st Quartile, Median, Mean, 3rd Quartile and the Maximum values for each attribute. 
+               The "Info" provides the number of observations, number of variables(attributes) and data type for each attribute.',
       
-               h3('Exploratory Data Analysis'),
+               h3('###### description not done Exploratory Data Analysis'),
                'In this tab, it requires user input so that users can view some visualized plots. There are some models to show the visualized plot. ', 
                h5('The 1st plot is Cross Correlation which portray...'),
                h5('The 2nd plot is Dimensionality Reduction which shows...'),
@@ -45,7 +42,28 @@ shinyUI(fluidPage(
                h5('Third is Receiver Operating Characteristic(ROC) curve...')
                ),
   
-      tabPanel("Tab2"),
+      tabPanel("Attribute Description and Data Summary",
+               h3('Description of variables'),
+               'This section will describe the attributes for each columns: ', 
+               h5('*Diagnosis: Display the prediction of diagnosis where 0= Malignant and 1=Benign'),
+               h5('*Radius_M: Mean of distances from center to points on the perimeter'),
+               h5('*Texture_M: The standard deviation of grayscale value'),
+               h5('*Perimeter_M: Perimeter of cell'),
+               h5('*Area_M: Area of cell '),
+               h5('*Smootheness_M: Local variation in radius lengths'),
+               h5('*Compactness_M: The perimeter^2/ area-1.0'),
+               h5('*Concavity_M: Severity of concave portions of the contour'),
+               h5('*ConcavePoint_M: Number of concave points of the contour'),
+               h5('*Symmetry_M: Mean for perimeter of samples collected'),
+               h5('*FractalDimension_M: "Coastline approximation" -1'),
+               h5(''),
+               h5('The features includes mean, standard error and "worst"(mean of the three largest values). For instance, mean radius, radius standard error and worst radius.'),
+               
+               h3('Summary of Breast Cancer Dataset'),
+               verbatimTextOutput("summary"),
+               h3('Info on Breast Cancer Dataset'),
+               verbatimTextOutput("info")),
+      
       tabPanel("Tab3")
     ),
     
@@ -66,3 +84,40 @@ shinyUI(fluidPage(
 )
 )
 )
+
+
+
+#-server-
+library(shiny)
+
+cancerDataset <- read.csv("data.csv")
+cancerDataset = subset(cancerDataset, select = -c(id))
+
+names(cancerDataset) <- c('Diagnosis', 'Radius_M', 'Texture_M', 'Perimeter_M', 'Area_M', 'Smootheness_M', 'Compactness_M', 'Concavity_M','ConcavePoints_M','Symmetry_M' ,'FractalDimension_M',
+                          'Radius_se', 'Texture_se','Perimeter_se', 'Area_se', 'Smoothness_se', 'Compactness_se', 'Concavity_se','ConcavePoints_se', 'Symmetry_se', 'FractalDimension_se',
+                          'Worst_Radius', 'Worst_Texture','Worst_Perimeter', 'Worst_Area', 'Worst_Smoothness', 'Worst_Compactness', 'Worst_Concavity','Worst_ConcavePoints', 'Worst_Symmetry', 'Worst_FractalDimension')
+
+# Define server logic required to draw a histogram
+shinyServer(function(input, output) {
+
+    output$distPlot <- renderPlot({
+
+        # generate bins based on input$bins from ui.R
+        x    <- faithful[, 2]
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+        # draw the histogram with the specified number of bins
+        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+
+    })
+    
+    output$summary <- renderPrint({
+      summary(cancerDataset)
+    })
+    
+    output$info <- renderPrint({
+      str(cancerDataset)
+    })
+    
+
+})
