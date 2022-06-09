@@ -1,0 +1,29 @@
+### Introduction
+
+Aiyai mates! Welcome to GraphIt R Shiny application. In this application, users can interact with the interface to check some of the relationships of the graphs based on the breast cancer dataset. This application can also make predictions for users based on the user input. This application can also show the accuracy and consistency of the prediction result based on the actual breast cancer dataset.
+
+
+### User Input
+There are 2 tabs that need the user to input the data through the side panel by clicking the checkboxes given which are the Exploratory Data Analysis tab and the Prediction tab.
+
+In the Exploratory Data Analysis tab, users need to choose the attributes to see the correlation <br> 
+In the Prediction tab, XXXXXXX
+
+### Attribute Description and Data Summary
+The descriptions of each feature is provided here. Next, the breast cancer dataset is summarized by providing the Mininum, 1st Quartile, Median, Mean, 3rd Quartile and the Maximum values for each attribute. <br>
+The "Info" provides the number of observations, number of variables(attributes) and data type for each attribute.
+
+### Exploratory Data Analysis
+In this tab, it requires user input so that users can view some visualized plots. There are some models to show the visualized plot.<br> 
+The 1st plot is Cross Correlation which portray...')<br> 
+The 2nd plot is Dimensionality Reduction which shows...')<br>
+The 3rd plot is a box-plot that can make the user see....')
+
+### Prediction
+In this tab, it also requires user input so that users can get the predicted result of breast cancer based on our trained model and prepared dataset.
+
+### Model Evaluation
+This tab is about the evaluation of our model for the prediction. There are some models to show the evaluation.<br> 
+First is the confusion matrix, which is used to measure the accuracy of the logistic regression model.<br> 
+Second is precision and recall....<br> 
+Third is Receiver Operating Characteristic(ROC) curve...
