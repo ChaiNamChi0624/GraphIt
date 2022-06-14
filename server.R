@@ -87,7 +87,6 @@ model_accuracies <- data.frame(model=c("logisticRegression", "naiveBayes", "SVM"
 list[df_tuned, best_gamma, best_cost] <- tune_svm(x_train, y_train, x_test, y_test, seed)
 
 # Retrain SVM model with found best params
-set.seed(seed)
 best_svm_classifier <- svm(x_train, y_train, gamma=best_gamma, cost=best_cost)
 best_y_pred <- predict(best_svm_classifier, x_test)
 best_svm_cm <- confusionMatrix(best_y_pred, y_test)
@@ -245,12 +244,13 @@ shinyServer(function(input, output) {
    })
   
   output$summary <- renderTable({
-    skim(cancerDataset)
-    
+    summary_skim <- skim(cancerDataset)
+    summary_skim <- summary_skim[-c(3:9, 17)]
+    return(summary_skim)
   })
   
   output$initial_features <- renderPrint(
-    str(initial_df[-1])  
+    str(initial_df[-1])
   )
   
   output$target <- renderPrint({ 

@@ -140,9 +140,10 @@ shinyUI(fluidPage(
                         sidebarLayout(
                           sidebarPanel(
                             tabPanel(HTML("<center><h3><b>User Input</b></h3></center>"),
-                                     uiOutput("user_input"),
-                                     submitButton("Predict"))
-                          ),
+                                     uiOutput("user_input")
+                                     # ,submitButton("Predict")
+                                     
+                                     )),
                           mainPanel(
                             h2("Prediction"),
                             p(textOutput('best_model_acc')),
