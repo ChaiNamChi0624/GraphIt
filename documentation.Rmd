@@ -33,6 +33,13 @@ Resource of dataset: [Breast Cancer Wisconsin (Diagnostic) Data Set](https://www
 #### Prediction
 - Prediction on diagnosis of breast cancer based on measurement values (Prediction tab).
 
+* Feature Selection
+- Principle component
+- PCA (40%->90%)
+- Train model: Linear Regression, SVM, 
+- choose the most accurate model
+- 
+
 
 
 ### Prediction
