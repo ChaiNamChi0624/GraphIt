@@ -1,23 +1,39 @@
 ### Introduction
 
-Aiyai mates! Welcome to GraphIt R Shiny application. In this application, users can interact with the interface to check some of the relationships of the graphs based on the breast cancer dataset. This application can also make predictions for users based on the user input. This application can also show the accuracy and consistency of the prediction result based on the actual breast cancer dataset.
+Aiyai mates! Welcome to GraphIt R Shiny application. 
+
+There are 3 main purposes of this application:
+1. Users can interact with the interface to have some insights on the relationships of the variables in a breast cancer data set.
+2. This application can also make predictions for users based on the user input. 
+3. This application can also show the accuracy and consistency of the prediction result based on the actual breast cancer data set.
+
+Resource of dataset: [Breast Cancer Wisconsin (Diagnostic) Data Set](https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data?datasetId=180&language=R&outputs=Visualization)
+
+***
+***
+
+### How to use this application?
+#### Exloratory Data Analysis
+- Data visualization on the data set (EDA tab).
+- **User Input**
+  + User can choose the type of graph.
+  + Next, user can choose variable for x-axis & y-axis for **scatter plot**.
+  + For **histogram, bar graph and box plot**, user can only choose **x-axis** variable.
+  + For **histogram and box plot**, user cannot choose **diagnosis** as variable.
+  + Below the custommized graph, there is a correlation plot.
+  
+- **Usage of the graphs/plot**  
+  + Scatter plot let user to visualize the distribution of data for two variables and look into their relationships.
+  + Histogram summarizes the total occurences for a value for a continuous variable.
+  + Bar graph summarizes the total occurences for a value for a categorical variable.
+  + Box plot let the users to visualize  the summary of a variable and find the outliers.
+  + Correlation plot summarize the significance of each variable for the diagnosis.
+
+***
+#### Prediction
+- Prediction on diagnosis of breast cancer based on measurement values (Prediction tab).
 
 
-### User Input
-There are 2 tabs that need the user to input the data through the side panel by clicking the checkboxes given which are the Exploratory Data Analysis tab and the Prediction tab.
-
-In the Exploratory Data Analysis tab, users need to choose the attributes to see the correlation <br> 
-In the Prediction tab, XXXXXXX
-
-### Attribute Description and Data Summary
-The descriptions of each feature is provided here. Next, the breast cancer dataset is summarized by providing the Mininum, 1st Quartile, Median, Mean, 3rd Quartile and the Maximum values for each attribute. <br>
-The "Info" provides the number of observations, number of variables(attributes) and data type for each attribute.
-
-### Exploratory Data Analysis
-In this tab, it requires user input so that users can view some visualized plots. There are some models to show the visualized plot.<br> 
-The 1st plot is Cross Correlation which portray...')<br> 
-The 2nd plot is Dimensionality Reduction which shows...')<br>
-The 3rd plot is a box-plot that can make the user see....')
 
 ### Prediction
 In this tab, it also requires user input so that users can get the predicted result of breast cancer based on our trained model and prepared dataset.
@@ -27,3 +43,12 @@ This tab is about the evaluation of our model for the prediction. There are some
 First is the confusion matrix, which is used to measure the accuracy of the logistic regression model.<br> 
 Second is precision and recall....<br> 
 Third is Receiver Operating Characteristic(ROC) curve...
+
+***
+
+### Attribute Description and Data Summary
+The descriptions of each feature is provided here. Next, the breast cancer dataset is summarized by providing the Mininum, 1st Quartile, Median, Mean, 3rd Quartile and the Maximum values for each attribute. <br>
+The "Info" provides the number of observations, number of variables(attributes) and data type for each attribute.
+
+
+

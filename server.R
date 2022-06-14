@@ -21,6 +21,9 @@ library(tidyverse)
 library(corrplot)
 library(ggcorrplot)
 
+# package to summarise dataset
+library(skimr)
+
 # package to plot Rtsne
 library(Rtsne)
 
@@ -68,7 +71,7 @@ shinyServer(function(input, output) {
     if(input$graph %in% "Scatter Plot"){
       
       # plot by using the chosen size of sample data, input for x-axes, y-axes and color based on Diagnosis
-      p <- ggplot(data = dataSample(), aes_string(x = xInput , y = yInput, col = "Diagnosis")) + 
+      p <- ggplot(data = dataSample(), aes_string(x = xInput , y = yInput, col = "diagnosis")) + 
         # add points
         geom_point() +
         
@@ -76,15 +79,14 @@ shinyServer(function(input, output) {
         geom_smooth() +
         
         # add title
-        labs(title = paste(xInput, "and", yInput),
-             x = xInput, y = yInput) +
-        theme_gdocs()
+        labs(title = paste("Scatter Plot of ", xInput, "and", yInput),
+             x = xInput, y = yInput)
       
       # plot histogram if input of graph is Histogram
     }else if(input$graph %in% "Histogram"){
       
       # cannot plot categorical data in histogram
-      if(xInput %in% "Diagnosis"){
+      if(xInput %in% "diagnosis"){
         stop("Cannot plot histogram for Diagnosis. Please choose other parameter.")
       }
       
@@ -102,7 +104,7 @@ shinyServer(function(input, output) {
       
       # add sample data, x-axes to ggplot
       # coloring based on groups of Diagnosis
-      ggplot(dataSample(), aes_string(x = xInput, fill = "Diagnosis")) +
+      ggplot(dataSample(), aes_string(x = xInput, fill = "diagnosis")) +
         
         # add bar
         geom_bar(stat = "count", position = "stack", show.legend = TRUE) +
@@ -112,14 +114,22 @@ shinyServer(function(input, output) {
       
       # plot boxplot if input is Box Plot
     }else if(input$graph %in% "Box Plot"){
+      # cannot plot same variable
+      if(xInput %in% "diagnosis"){
+        stop("Please choose other parameter.")
+      }
       
       # transform dataset into value form
-      cancerDataset1 <- melt(dataSample()[2:32], id = "Diagnosis")
+      
+       sample = subset(dataSample(), select = c('diagnosis', xInput))
+       print(sample)
+       cancerDataset1 <- melt(sample, id = "diagnosis")
+       print(cancerDataset1)
       
       # add reformed dataset, x-axes from input, value from reformed dataset to ggplot
       # coloring based on groups of Diagnosis
-      ggplot(cancerDataset1, aes(x = xInput, y = value, color = Diagnosis)) +
-        #geom_jitter(aes(color = Diagnosis)) +
+      ggplot(cancerDataset1, aes(x = xInput, y = value, color = diagnosis)) +
+        geom_jitter(aes(color = diagnosis)) +
         
         # add bosplot
         geom_boxplot() +
@@ -135,8 +145,8 @@ shinyServer(function(input, output) {
     
     # modify non-numeric data into numeric
     # 0: Malignant 1:Benign
-    cancerDataset$Diagnosis <- factor(cancerDataset$Diagnosis, levels = c("M", "B"), labels = c(0, 1))
-    cancerDataset$Diagnosis <- as.numeric(as.character(cancerDataset$Diagnosis))
+    cancerDataset$diagnosis <- factor(cancerDataset$diagnosis, levels = c("M", "B"), labels = c(0, 1))
+    cancerDataset$diagnosis <- as.numeric(as.character(cancerDataset$diagnosis))
     
     #options(repr.plot.width = 20, repr.plot.height = 20, repr.plot.res = 100)
     
@@ -148,157 +158,51 @@ shinyServer(function(input, output) {
     # round off decimal points to 2 dp
     round(r, 2)
     
-    #ggcorrplot(r, 
-    # method = "circle",
-    #title = "Correlation between Variables",
-    #colors = c("#6D9EC1", "white", "#E46726"),
-    #outline.col = "white",
-    #ggtheme = ggplot2::theme_light,
-    #hc.order = TRUE,
-    #lab = FALSE,
-    #size = 5,
-    #type = "lower")
+    ggcorrplot(r,
+    method = "square",
+    title = "Correlation between Variables",
+    colors = c("#6D9EC1", "white", "#E46726"),
+    outline.col = "white",
+    ggtheme = ggplot2::theme_light,
+    hc.order = TRUE,
+    lab = TRUE,
+    lab_size = 5,
+    type = "lower")
     
-    #ggcorr(cancerDataset[, 2:32], 
-    #method = c("everything", "pearson"),
-    #geom = "text",
-    #nbreak = 5,
-    #palette = "RdYlBu",
-    #size = 5,
-    #hjust = 1,
-    #layout.exp = 1,
-    #label = TRUE,
-    #label_alpha = 0.5)
+    # ggcorr(cancerDataset[, 2:13],
+    # method = c("everything", "pearson"),
+    # geom = "text",
+    # nbreak = 5,
+    # palette = "RdYlBu",
+    # size = 5,
+    # hjust = 1,
+    # layout.exp = 1,
+    # label = TRUE,
+    # label_alpha = 0.5)
     
     # define the grid: 1 row 3 columns
-    par(mfrow = c(1,3))
+    #par(mfrow = c(1,3))
     
     # plot graph for columns 2 to 11
-    p1 <- corrplot(cor(cancerDataset[, c(2:12)]),
-                   method = "circle",
-                   order = "hclust",
-                   type = "lower",
-                   diag = FALSE,
-                   tl.col = "black",
-                   addCoef.col = "pink",
-                   number.cex = 0.9,
-                   bg = "white",
-                   title = "Correlation between Variables",
-                   mar = c(0, 0, 5, 0)
-    )
-    
-    # plot graph for columns 12 to 21
-    p2 <- corrplot(cor(cancerDataset[, c(12:22, 2)]),
-                   method = "circle",
-                   order = "hclust",
-                   type = "lower",
-                   diag = FALSE,
-                   tl.col = "black",
-                   addCoef.col = "pink",
-                   number.cex = 0.9,
-                   bg = "white",
-                   title = "Correlation between Variables",
-                   mar = c(0, 0, 5, 0))
-    
-    # plot graph for columns 22 to 31
-    p3 <- corrplot(cor(cancerDataset[, c(22:32, 2)]),
-                   method = "circle",
-                   order = "hclust",
-                   type = "lower",
-                   diag = FALSE,
-                   tl.col = "black",
-                   addCoef.col = "pink",
-                   number.cex = 0.9,
-                   bg = "white",
-                   title = "Correlation between Variables",
-                   mar = c(0, 0, 5, 0))
-    
+    # p1 <- corrplot(cor(cancerDataset[, c(2:12)]),
+    #                method = "circle",
+    #                order = "hclust",
+    #                type = "lower",
+    #                diag = FALSE,
+    #                tl.col = "black",
+    #                addCoef.col = "pink",
+    #                number.cex = 0.9,
+    #                bg = "white",
+    #                title = "Correlation between Variables",
+    #                mar = c(0, 0, 5, 0)
+    # )
+
+   })
+  
+  output$summary <- renderTable({
+    skim(cancerDataset)
     
   })
   
-  ---------------------------------------------------------------------
-    ##### Backup Code #####
-  ---------------------------------------------------------------------
-    output$scatter <- renderPlotly({
-      
-      xInput <- input$x
-      yInput <- input$y
-      
-      
-      p <- ggplot(data = dataSample(), aes_string(x = xInput , y = yInput, col = "Diagnosis")) + 
-        geom_point() +
-        geom_smooth() +
-        #geom_line(size = 0.5) +
-        #geom_hline(aes(yintercept = as.numeric(x)), linetype = 'dashed', color = 'red')+
-        #geom_vline(aes(xintercept = as.numeric(y)), linetype = 'dashed', color = 'red')+
-        labs(title = paste(xInput, "and", yInput),
-             x = xInput, y = yInput)+
-        theme_gdocs()
-      
-      ggplotly(p)
-      
-      print(p)
-      
-    })
-  
-  output$histogram <- renderPlotly({
-    
-    #sampleCancer$Diagnosis <- as.numeric(as.character(sampleCancer$Diagnosis))
-    
-    #corrplot(cor(sampleCancer), order = "hclust")
-    
-    p <- ggplot(sampleCancer, aes_string(x = input$x)) +
-      geom_histogram(fill = "#69b3a2")
-    
-    ggplotly(p)
-    
-    print(p)
-    
-  })
-  
-  output$bar <- renderPlotly({
-    #p <- ggplot(sampleCancer, aes_string(x = input$x, y = "Diagnosis", col = "Diagnosis")) +
-    #geom_bar(stat = "identity", width = 0.5, aes_string(fill = "Diagnosis")) +
-    #coord_flip()
-    
-    ggplot(sampleCancer, aes_string(x = input$x, fill = "Diagnosis")) +
-      geom_bar(stat = "count", position = "stack", show.legend = TRUE)
-  })
-  
-  output$lollipop <- renderPlotly({
-    
-    ggplot(sampleCancer, aes_string(x = input$x, y = input$y, col = "Diagnosis")) +
-      geom_point() +
-      geom_segment(aes_string(x = input$x, xend = input$x, y =0, yend = input$y)) +
-      coord_flip()
-    
-    
-  })
-  
-  
-  
-  
-  output$boxplot <- renderPlotly({
-    #p <- ggplot(cancerDataset, aes_string(x = "Diagnosis", y = "Texture_Mean", color = "Texture_Mean")) +
-    #geom_boxplot() +
-    #geom_jitter() +
-    #ggtitle("Diagnosis based on Texture_Mean")
-    
-    #ggplotly(p)
-    #print(p)
-    
-    cancerDataset1 <- melt(cancerDataset[2:32], id = "Diagnosis")
-    
-    ggplot(cancerDataset1, aes(x = variable, y = value, color = Diagnosis)) +
-      #geom_jitter(aes(color = Diagnosis)) +
-      geom_boxplot()
-    
-    
-    
-    
-    
-  })
-  
-  #output$summary <- renderText(      summary(sampleCancer))
   
 })
