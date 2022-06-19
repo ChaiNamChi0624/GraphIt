@@ -222,7 +222,11 @@ shinyServer(function(input, output) {
     summary_skim <- summary_skim[-c(3:9, 17)]
     return(summary_skim)
   })
-  
+    
+    output$info <- renderPrint({
+    str(cancerDataset)
+  })
+    
   output$initial_features <- renderPrint(
     str(initial_df[-1])
   )
