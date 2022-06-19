@@ -16,6 +16,8 @@ cancerDataset <- read.csv("data.csv")
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
+  theme = bs_theme(bg = "#FAF0E6", fg = "#000000", 
+               primary = "#9400D3",font_scale= 1.2),
 
   
   # Application title
