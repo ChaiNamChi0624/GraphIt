@@ -123,3 +123,4 @@ tune_svm <- function(x_train, y_train, x_test, y_test, seed) {
   opt_p <- subset(df_tuned, cnt==max(cnt))[1,]
   return(list("df_tuned" = df_tuned, "best_gamma" = opt_p$gamma, "best_cost" = opt_p$cost))
 }
+

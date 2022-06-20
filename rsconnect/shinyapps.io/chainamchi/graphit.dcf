@@ -1,0 +1,13 @@
+name: graphit
+title:
+username:
+account: chainamchi
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6518764
+bundleId: 6024511
+url: https://chainamchi.shinyapps.io/graphit/
+when: 1655738912.34314
+lastSyncTime: 1655738912.34314
+asMultiple: FALSE
+asStatic: FALSE

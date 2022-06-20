@@ -1,16 +1,19 @@
 ### Description of variable
 This section will describe the attributes for each columns:
 <br><br>
-‣***Diagnosis***: Display the prediction of diagnosis where: *0= Malignant, 1=Benign* <br>
-‣***Radius_M***: Mean of distances from center to points on the perimeter <br>
-‣***Texture_M***: The standard deviation of grayscale value <br>
-‣***Perimeter_M***: Perimeter of cell <br>
-‣***Area_M***: Area of cell <br>
-‣***Smootheness_M***: Local variation in radius lengths <br>
-‣***Compactness_M***: The perimeter^2/ area-1.0 <br>
-‣***Concavity_M***: Severity of concave portions of the contour <br>
-‣***ConcavePoint_M***: Number of concave points of the contour <br>
-‣***Symmetry_M***: Mean for perimeter of samples collected <br>
-‣***FractalDimension_M***: "Coastline approximation" -1 <br>
+
+|    Attribute    |    Description
+|----------|-----------|
+| **Diagnosis**  | Display the prediction of diagnosis where: *0= Malignant, 1=Benign* |
+| **Radius_M** |  Mean of distances from center to points on the perimeter |
+| **Texture_M** | The standard deviation of grayscale value |
+| **Perimeter_M** | Perimeter of cell |
+| **Area_M** | Area of cell |
+| **Smootheness_M** | Local variation in radius lengths |
+| **Compactness_M** | The perimeter^2 / area - 1.0 |
+| **Concavity_M** | Severity of concave portions of the contour |
+| **ConcavePoint_M** | Number of concave points of the contour |
+| **Symmetry_M** | Mean for perimeter of samples collected |
+| **FractalDimension_M** | "Coastline approximation" -1 |
+
 <br>
-The features includes mean, standard error and "worst"(mean of the three largest values). For instance, mean radius, radius standard error and worst radius.

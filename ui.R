@@ -11,14 +11,16 @@ library(shiny)
 library(plotly)
 library(DT)
 library(highcharter)
+library(bslib)
+library(markdown)
 
 cancerDataset <- read.csv("data.csv")
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
-  theme = bs_theme(bg = "#FAF0E6", fg = "#000000", 
-               primary = "#9400D3",font_scale= 1.2),
-
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
+  ),
   
   # Application title
   titlePanel("Breast Cancer Data Visualizer & Cancer Predictor"),
@@ -37,6 +39,11 @@ shinyUI(fluidPage(
                          tableOutput("summary"),
                          h3('Info on Breast Cancer Dataset'),
                          verbatimTextOutput("info")),
+                         tags$head(tags$style(HTML("
+                                      #printout {
+                                        font-size: 20px;
+                                      }
+                                      "))),
                 
                 tabPanel("EDA",
                          sidebarLayout(
@@ -61,6 +68,7 @@ shinyUI(fluidPage(
                              plotOutput("corr", width = "100%", height = "720px")
                            )
                          )),
+               
                tabPanel("Model Traning",
                         tabsetPanel(
                           tabPanel("Data Preparation",
@@ -71,6 +79,11 @@ shinyUI(fluidPage(
                                    br(),
                                    h3("Target Variable"),
                                    verbatimTextOutput("target"),
+                                   tags$head(tags$style(HTML("
+                                      #printout {
+                                        font-size: 20px;
+                                      }
+                                      "))),
                                    br(),
                                    h3("Dimensionality Reduction with PCA"),
                                    p("Applying PCA as a preprocessing step helps to:"),
@@ -88,6 +101,7 @@ shinyUI(fluidPage(
                                      tabPanel("x_test", DT::dataTableOutput("x_test_pca"))),
                                    hr(),
                                    br(), br()),
+                          
                           tabPanel("Model Selection",
                                    h2("2. Setting Up Multiple Baseline Models"),
                                    hr(),
@@ -119,6 +133,7 @@ shinyUI(fluidPage(
                                    tags$blockquote("From the result above, we can say that SVM is the best model among all with accuracy = 0.965. SVM is selected to futher fine-tuning and improving."),
                                    hr(),
                                    br(), br()),
+                          
                           tabPanel("Model Fine-tuning",
                                    h2("3. Fine-tune Selected Model"),
                                    hr(),
@@ -138,6 +153,7 @@ shinyUI(fluidPage(
                                      )
                                    ))
                         )),
+               
                tabPanel("Model Prediction",
                         sidebarLayout(
                           sidebarPanel(

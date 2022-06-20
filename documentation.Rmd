@@ -1,4 +1,4 @@
-### Introduction
+## Introduction
 
 Aiyai mates! Welcome to GraphIt R Shiny application. 
 
@@ -11,15 +11,15 @@ Resource of dataset: [Breast Cancer Wisconsin (Diagnostic) Data Set](https://www
 
 ***
 
-### How to use this application?
-#### Attribute Description and Data Summary
+## How to use this application?
+### Attribute Description and Data Summary
 Click this tab to see the descriptions of each feature that is provided here.<br> 
 The breast cancer dataset is summarized by providing the Mininum, 1st Quartile, Median, Mean, 3rd Quartile and the Maximum values for each attribute. <br>
 The "Info" provides the number of observations, number of variables(attributes) and data type for each attribute.
 
 ***
 
-#### Exloratory Data Analysis
+### Exploratory Data Analysis
 Data visualization on the data set (EDA tab).
 
 - **User Input**
@@ -37,7 +37,16 @@ Data visualization on the data set (EDA tab).
   + Correlation plot summarize the significance of each variable for the diagnosis.
 
 ***
-#### Model Prediction
+
+### Model Training
+This tab is about the process of model training and how we improve the model for the breast cancer prediction. <br> 
+1. Data Preparation - including initial selected features, target variable, Principal Component Analysis(PCA), train result and test result.<br>
+2. Set Up Baseline Model - Multiple ML Models are trained and the results are shown in this section. <br>
+3. Fine-tune - The best model is selected to fine tune and improve through the combination of cost and gamma.
+
+***
+
+### Model Prediction
 Prediction on diagnosis of breast cancer with based on *user input measurement values* (Prediction tab).
 
 - Feature Selection
@@ -47,13 +56,3 @@ Prediction on diagnosis of breast cancer with based on *user input measurement v
 - Train model: Logistic Regression, SVM, Naive Bayes, Random Forest
 
 ***
-
-#### Model Training
-This tab is about the process of model training and how we improve the model for the breast cancer prediction. <br> 
-1. Data Preparation - including initial selected features, target variable, Principal Component Analysis(PCA), train result and test result.<br>
-2. Set Up Baseline Model - Multiple ML Models are trained and the results are shown in this section. <br>
-3. Fine-tune - The best model is selected to fine tune and improve through the combination of cost and gamma.
-
-
-***
-
